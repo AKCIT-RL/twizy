@@ -95,6 +95,27 @@ ros2 launch ouster_ros sensor.composite.launch.xml \
     sensor_hostname:=<IP> viz:=true
 ```
 
+## Suporte Mecânico
+
+Suporte projetado no Fusion 360 para fixar o sensor LiDAR Ouster OS1-128 no rack superior do Twizy.
+
+O conjunto é composto por uma base plana, uma placa vertical traseira e um colar cilíndrico que abraça o corpo do sensor. O design ainda está em fase de projeto — o material e o processo de fabricação serão definidos.
+
+<div style="display:flex; gap:12px; flex-wrap:wrap;">
+  <figure style="margin:0; text-align:center;">
+    <img src="../assets/images/lidar-mount-back.png" alt="Vista traseira do suporte" width="260"/>
+    <figcaption>Vista traseira — bracket isolado</figcaption>
+  </figure>
+  <figure style="margin:0; text-align:center;">
+    <img src="../assets/images/lidar-mount-front.png" alt="Vista frontal com sensor" width="260"/>
+    <figcaption>Vista frontal — sensor OS1-128 encaixado</figcaption>
+  </figure>
+  <figure style="margin:0; text-align:center;">
+    <img src="../assets/images/lidar-mount-iso.png" alt="Vista isométrica do conjunto" width="260"/>
+    <figcaption>Vista isométrica — conjunto completo</figcaption>
+  </figure>
+</div>
+
 ## Solução de Problemas
 
 **Nenhum dado recebido:**

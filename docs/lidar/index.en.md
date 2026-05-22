@@ -95,6 +95,27 @@ ros2 launch ouster_ros sensor.composite.launch.xml \
     sensor_hostname:=<IP> viz:=true
 ```
 
+## Mechanical Mount
+
+A Fusion 360 mount designed to attach the Ouster OS1-128 LiDAR sensor to the Twizy's roof rack.
+
+The assembly consists of a flat base plate, a vertical back plate, and a cylindrical collar that wraps around the sensor body. The design is still in progress — material and manufacturing process are yet to be decided.
+
+<div style="display:flex; gap:12px; flex-wrap:wrap;">
+  <figure style="margin:0; text-align:center;">
+    <img src="../assets/images/lidar-mount-back.png" alt="Rear view of mount" width="260"/>
+    <figcaption>Rear view — bracket alone</figcaption>
+  </figure>
+  <figure style="margin:0; text-align:center;">
+    <img src="../assets/images/lidar-mount-front.png" alt="Front view with sensor" width="260"/>
+    <figcaption>Front view — OS1-128 sensor installed</figcaption>
+  </figure>
+  <figure style="margin:0; text-align:center;">
+    <img src="../assets/images/lidar-mount-iso.png" alt="Isometric view of full assembly" width="260"/>
+    <figcaption>Isometric view — full assembly</figcaption>
+  </figure>
+</div>
+
 ## Troubleshooting
 
 **No data received:**
