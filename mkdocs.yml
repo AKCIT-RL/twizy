@@ -1,8 +1,8 @@
 site_name: AIR Twizy Hardware
 site_description: Documentation for the AIR-UFG Twizy hardware stack — camera, LiDAR and vehicle interface
-site_url: https://ruigonc.github.io/air_twizy_hardware_docs
-repo_url: https://github.com/AIR-UFG/air_twizy_hardware
-repo_name: AIR-UFG/air_twizy_hardware
+site_url: https://akcit-rl.github.io/twizy/
+repo_url: https://github.com/AKCIT-RL/twizy
+repo_name: AKCIT-RL/twizy
 edit_uri: edit/main/docs/
 
 theme:

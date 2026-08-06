@@ -30,7 +30,7 @@
 | Driver da câmera (arena_camera_ros2) | 3 câmeras a ~30 FPS na LAN do veículo; pela VPN só comprimido (~4,5 FPS) |
 | Driver LiDAR (ouster_ros) | Nuvem e panorâmicas publicadas; exige `docker restart` após ligar (corrida de boot) |
 | Simulação Gazebo | Carrega; teleop por teclado funciona |
-| GitHub Pages (docs) | Publicado em [ruigonc.github.io/air_twizy_hardware_docs](https://ruigonc.github.io/air_twizy_hardware_docs/) |
+| GitHub Pages (docs) | Publicado em [akcit-rl.github.io/twizy](https://akcit-rl.github.io/twizy/) |
 
 ---
 
