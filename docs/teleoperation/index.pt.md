@@ -2,6 +2,12 @@
 
 O Twizy suporta teleoperação remota via controle Xbox conectado a um laptop do operador em qualquer lugar com acesso à internet. A comunicação ocorre pela [VPN NetBird](../networking/netbird.md) e um [FastDDS Discovery Server](../networking/discovery-server.md) no veículo.
 
+!!! warning "O transporte descrito nesta página não entrega mais dados"
+    O caminho DDS-sobre-VPN abaixo **descobre** os tópicos mas não transporta os dados até o
+    operador (o publicador do veículo permanece com `Subscription count: 0`). O modo em uso hoje
+    é o [Dashboard Web](dashboard.md), que leva os dados por uma ponte SSH. Mantemos esta página
+    como referência da arquitetura e dos pacotes ROS 2, que continuam válidos.
+
 ## Visão Geral do Sistema
 
 ![Diagrama de arquitetura da teleoperação](../assets/images/teleop-architecture.png)
@@ -41,6 +47,11 @@ direct_teleop ──── /direct_control_cmd ──► SD-VehicleInterface
 ## Procedimento de Operação
 
 ### No veículo
+
+
+!!! note "Na operação normal isso já está no ar"
+    A stack do veículo sobe sozinha no boot via systemd — veja [Inicialização Automática](../vehicle/autostart.md).
+    Os comandos abaixo servem para depuração ou para subir algo que caiu.
 
 ```bash
 # 1. Verificar se o NetBird está conectado e anotar o IP

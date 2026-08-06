@@ -4,6 +4,20 @@ Driver ROS2 para sensores LiDAR Ouster OS-series, empacotado como container Dock
 
 Fonte: [ouster-lidar/ouster-ros](https://github.com/ouster-lidar/ouster-ros) (incluído como submódulo).
 
+## Montagem no veículo
+
+O sensor fica em um suporte próprio, projetado para os pontos de fixação do teto. As imagens abaixo
+mostram o conjunto por três ângulos.
+
+<div class="grid" markdown>
+![Suporte do LiDAR — vista isométrica](../assets/images/lidar-mount-iso.png)
+![Suporte do LiDAR — vista frontal](../assets/images/lidar-mount-front.png)
+![Suporte do LiDAR — vista traseira](../assets/images/lidar-mount-back.png)
+</div>
+
+Como no caso das câmeras, usar os pontos de fixação do próprio chassi dá uma referência física
+estável para as TFs do URDF em simulação.
+
 ## Requisitos
 
 - Sensor Ouster OS-series conectado via Ethernet a uma interface dedicada (ex: `enp7s0`)

@@ -2,6 +2,16 @@
 
 O ROS2 padrão depende de multicast para descoberta de nós, o que não funciona através de túneis VPN ou entre máquinas em redes diferentes. A solução é um **FastDDS Discovery Server centralizado** rodando no veículo, com o qual todos os nós (locais e remotos) se registram via unicast.
 
+!!! warning "O transporte remoto por DDS não entrega dados"
+    O Discovery Server continua sendo a arquitetura do veículo e é o que faz os nós locais se
+    enxergarem. O que **não** funciona hoje é o consumo remoto: um operador fora do veículo
+    descobre os tópicos (`ros2 topic list` responde) mas não recebe os dados. Para validar de
+    verdade, use `ros2 topic hz <tópico>` — `topic list` dá falso positivo.
+
+    O caminho em uso para teleoperação é a ponte SSH descrita em
+    [Dashboard Web](../teleoperation/dashboard.md).
+
+
 ## Como funciona
 
 ```mermaid

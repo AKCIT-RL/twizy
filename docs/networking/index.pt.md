@@ -2,6 +2,16 @@
 
 O Twizy utiliza um roteador industrial **Teltonika RUT950** 4G/LTE como gateway de rede embarcado, combinado com uma **VPN mesh NetBird** para permitir acesso remoto seguro a todos os nós ROS2 de qualquer lugar com conexão à internet.
 
+!!! warning "O transporte remoto por DDS não entrega dados"
+    O Discovery Server continua sendo a arquitetura do veículo e é o que faz os nós locais se
+    enxergarem. O que **não** funciona hoje é o consumo remoto: um operador fora do veículo
+    descobre os tópicos (`ros2 topic list` responde) mas não recebe os dados. Para validar de
+    verdade, use `ros2 topic hz <tópico>` — `topic list` dá falso positivo.
+
+    O caminho em uso para teleoperação é a ponte SSH descrita em
+    [Dashboard Web](../teleoperation/dashboard.md).
+
+
 ## Arquitetura
 
 ```mermaid

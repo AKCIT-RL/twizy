@@ -2,6 +2,16 @@
 
 Standard ROS2 relies on multicast for node discovery, which does not work across VPN tunnels or between machines on different networks. The solution is a **centralized FastDDS Discovery Server** running on the vehicle, which all nodes (local and remote) register with via unicast.
 
+!!! warning "Remote DDS transport does not deliver data"
+    The Discovery Server is still the vehicle's architecture and is what lets local nodes find each
+    other. What does **not** work today is remote consumption: an operator outside the vehicle
+    discovers the topics (`ros2 topic list` responds) but receives no data. To validate properly use
+    `ros2 topic hz <topic>` — `topic list` gives a false positive.
+
+    The path in use for teleoperation is the SSH bridge described in
+    [Web Dashboard](../teleoperation/dashboard.md).
+
+
 ## How it works
 
 ```mermaid

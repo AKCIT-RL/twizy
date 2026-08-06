@@ -71,12 +71,30 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
-  - Networking: networking/index.md
-  - Teleoperation: teleoperation/index.md
-  - Camera (Lucid Vision): camera/index.md
+  - Networking:
+      - Overview: networking/index.md
+      - NetBird VPN: networking/netbird.md
+      - Discovery Server: networking/discovery-server.md
+  - Teleoperation:
+      - Web Dashboard: teleoperation/dashboard.md
+      - Xbox / DDS: teleoperation/index.md
+      - Xbox Controller: teleoperation/xbox-controller.md
+  - Sensors: sensors.md
+  - Camera (Lucid Vision):
+      - Overview: camera/index.md
+      - Parameters: camera/parameters.md
+      - Streaming: camera/streaming.md
+      - Recording: camera/recording.md
   - LiDAR (Ouster): lidar/index.md
-  - Vehicle: vehicle/index.md
-  - Hardware: hardware/index.md
+  - Vehicle:
+      - Safety: vehicle/safety.md
+      - Overview: vehicle/index.md
+      - Automatic Startup: vehicle/autostart.md
+      - Operation: vehicle/operation.md
+      - Vehicle Interface: vehicle/interface.md
+  - Hardware:
+      - Overview: hardware/index.md
+      - Sensors: hardware/sensors.md
   - Configuration: configuration.md
   - Status & Roadmap: roadmap.md
 
