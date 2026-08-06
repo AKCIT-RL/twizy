@@ -6,6 +6,30 @@ Driver ROS2 Humble para câmeras Lucid Vision Triton (GigE Vision), empacotado c
 
 Adaptado do [driver oficial Lucid Vision ROS2](https://github.com/lucidvisionlabs/arena_camera_ros2) (originalmente para ROS2 Eloquent).
 
+## Montagem no veículo
+
+As três câmeras frontais operam em um suporte próprio, impresso em 3D e fixado no teto do Twizy.
+O arranjo cobre esquerda, centro e direita, e é o que alimenta os tópicos
+`/camera/top_{left,front,right}/image_raw` usados pela
+[teleoperação](../teleoperation/dashboard.md).
+
+![Suporte impresso em 3D com as três câmeras montado no teto do Twizy](../assets/images/camera-mount-vehicle.jpg)
+
+!!! note "Operação com múltiplas câmeras"
+    Dois pontos são conhecidos por derrubar a conexão das câmeras e valem checagem antes de
+    culpar o driver:
+
+    - **Jumbo frames e velocidade do enlace.** As interfaces GigE precisam de MTU alta; interfaces
+      de menor velocidade exigem tratamento de erro específico e são fonte recorrente de falha.
+    - **Ordem de inicialização.** Já houve falha de firmware ligada à ordem em que as câmeras
+      sobem — se uma unidade não aparece, reinicie o conjunto em vez de insistir na individual.
+
+    O Fast DDS também já conflitou com as placas GigE por subir em todas as interfaces do veículo,
+    impedindo a conexão das câmeras. Ele está restrito a uma única interface por causa disso.
+
+    Os pontos de fixação usados pelo suporte são os do próprio chassi, o que dá uma referência
+    física estável para as TFs do URDF em simulação.
+
 ## Requisitos
 
 ![Etiqueta do número de série (243901923)](../assets/images/camera-serial.png)
@@ -103,14 +127,14 @@ Todos os parâmetros são **somente na inicialização** — o nó deve ser rein
 |-----------|------|-----------|--------|
 | `serial` | int | Número de série da câmera | primeira disponível |
 | `topic` | string | Nome do tópico ROS2 | `/arena_camera_node/images` |
-| `pixelformat` | string | `bayer_rggb8`, `rgb8`, `bgr8`, `mono8`, … | `rgb8` |
-| `width` | int | Largura da imagem em pixels | máximo da câmera |
-| `height` | int | Altura da imagem em pixels | máximo da câmera |
-| `gain` | float | Ganho do sensor em dB | `0.0` |
+| `pixelformat` | string | `bayer_rggb8`, `rgb8`, `bgr8`, `mono8`, … | vazio — mantém o formato atual da câmera |
+| `width` | int | Largura da imagem em pixels | `0` — máximo da câmera |
+| `height` | int | Altura da imagem em pixels | `0` — máximo da câmera |
+| `gain` | float | Ganho do sensor em dB | `-1.0` — sentinela de "não aplicado" (`0.0` seria aplicado de fato) |
 | `exposure_time` | float | Exposição em microssegundos | padrão da câmera |
 | `frame_rate` | float | Taxa de aquisição alvo (FPS) | padrão da câmera |
 | `trigger_mode` | bool | `true` = modo gatilho, `false` = contínuo | `false` |
-| `qos_reliability` | string | `reliable` ou `best_effort` | `reliable` |
+| `qos_reliability` | string | `reliable` ou `best_effort` | vazio — usa o default do rclcpp |
 
 ### Interação entre frame_rate e exposure_time
 
@@ -162,7 +186,7 @@ Quando uma máquina tem múltiplas interfaces de rede (ex: porta GigE da câmera
 
 | Método | Resolução | Taxa | Banda | Notas |
 |--------|-----------|------|-------|-------|
-| RAW limitado | 1024×768 | 15 FPS | ~12 Mbps | Somente baixa resolução |
+| RAW limitado | 1024×768 | 15 FPS | ~94 Mbps | Somente baixa resolução |
 | JPEG comprimido q=80 | 2048×1536 | 33 FPS | ~35–45 Mbps | Res. máxima em taxa máxima (WiFi OK) |
 | RAW completo | 2048×1536 | 33 FPS | ~825 Mbps | Requer link GbE |
 

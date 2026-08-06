@@ -12,7 +12,7 @@ Perfis unicast FastDDS restringem qual IP é anunciado. O perfil do publisher ta
 
 | Método | Resolução | Taxa | Banda | Notas |
 |--------|-----------|------|-------|-------|
-| RAW limitado | 1024×768 | 15 FPS | ~12 Mbps | Somente baixa resolução |
+| RAW limitado | 1024×768 | 15 FPS | ~94 Mbps | Somente baixa resolução |
 | JPEG comprimido q=80 | 2048×1536 | 33 FPS | ~35–45 Mbps | Res. máxima em taxa máxima (WiFi OK) |
 | RAW completo | 2048×1536 | 33 FPS | ~825 Mbps | Requer link GbE |
 

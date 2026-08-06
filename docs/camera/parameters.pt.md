@@ -6,14 +6,14 @@ Todos os parâmetros são **somente na inicialização** — o nó deve ser rein
 |-----------|------|-----------|--------|
 | `serial` | int | Número de série da câmera | primeira disponível |
 | `topic` | string | Nome do tópico ROS2 | `/arena_camera_node/images` |
-| `pixelformat` | string | `bayer_rggb8`, `rgb8`, `bgr8`, `mono8`, … | `rgb8` |
-| `width` | int | Largura da imagem em pixels | máximo da câmera |
-| `height` | int | Altura da imagem em pixels | máximo da câmera |
-| `gain` | float | Ganho do sensor em dB | `0.0` |
+| `pixelformat` | string | `bayer_rggb8`, `rgb8`, `bgr8`, `mono8`, … | vazio — mantém o formato atual da câmera |
+| `width` | int | Largura da imagem em pixels | `0` — máximo da câmera |
+| `height` | int | Altura da imagem em pixels | `0` — máximo da câmera |
+| `gain` | float | Ganho do sensor em dB | `-1.0` — sentinela de "não aplicado" (`0.0` seria aplicado de fato) |
 | `exposure_time` | float | Exposição em microssegundos | padrão da câmera |
 | `frame_rate` | float | Taxa de aquisição alvo (FPS) | padrão da câmera |
 | `trigger_mode` | bool | `true` = modo gatilho, `false` = contínuo | `false` |
-| `qos_reliability` | string | `reliable` ou `best_effort` | `reliable` |
+| `qos_reliability` | string | `reliable` ou `best_effort` | vazio — usa o default do rclcpp |
 
 ## Interação entre frame_rate e exposure_time
 

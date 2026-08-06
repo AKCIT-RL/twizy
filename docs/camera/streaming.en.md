@@ -12,7 +12,7 @@ FastDDS unicast profiles restrict which IP is advertised. The publisher profile 
 
 | Method | Resolution | Rate | Bandwidth | Notes |
 |--------|-----------|------|-----------|-------|
-| RAW throttled | 1024×768 | 15 FPS | ~12 Mbps | Low resolution only |
+| RAW throttled | 1024×768 | 15 FPS | ~94 Mbps | Low resolution only |
 | JPEG compressed q=80 | 2048×1536 | 33 FPS | ~35–45 Mbps | Full res at full rate (WiFi OK) |
 | RAW full | 2048×1536 | 33 FPS | ~825 Mbps | Requires 1 GbE link |
 

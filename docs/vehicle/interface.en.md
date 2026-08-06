@@ -28,7 +28,9 @@ Integrates the StreetDrone Xenos Control Unit (XCU) with the ROS2 navigation sta
 **Key subscribed topics:**
 | Topic | Type | Description |
 |-------|------|-------------|
-| `/sd_control` | `ackermann_msgs/AckermannDriveStamped` | Drive commands |
+| `/direct_control_cmd` | `sd_msgs/DirectControl` | Torque and steering setpoints (path used by teleoperation) |
+| `/twist_cmd` | `geometry_msgs/TwistStamped` | Velocity command (alternative path) |
+| `/from_can_bus` | `can_msgs/Frame` | Frames received from the bus |
 
 **Key published topics:**
 | Topic | Type | Description |

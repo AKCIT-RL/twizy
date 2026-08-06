@@ -6,14 +6,14 @@ All parameters are **startup-only** — the node must be restarted to apply any 
 |-----------|------|-------------|---------|
 | `serial` | int | Camera serial number | first available |
 | `topic` | string | ROS2 topic name | `/arena_camera_node/images` |
-| `pixelformat` | string | `bayer_rggb8`, `rgb8`, `bgr8`, `mono8`, … | `rgb8` |
+| `pixelformat` | string | `bayer_rggb8`, `rgb8`, `bgr8`, `mono8`, … | empty — keeps the camera's current format |
 | `width` | int | Image width in pixels | camera maximum |
 | `height` | int | Image height in pixels | camera maximum |
-| `gain` | float | Sensor gain in dB | `0.0` |
+| `gain` | float | Sensor gain in dB | `-1.0` — "not applied" sentinel (`0.0` would actually be applied) |
 | `exposure_time` | float | Exposure in microseconds | camera default |
 | `frame_rate` | float | Target acquisition frame rate (FPS) | camera default |
 | `trigger_mode` | bool | `true` = triggered, `false` = continuous | `false` |
-| `qos_reliability` | string | `reliable` or `best_effort` | `reliable` |
+| `qos_reliability` | string | `reliable` or `best_effort` | empty — uses the rclcpp default |
 
 ## frame_rate and exposure_time interaction
 

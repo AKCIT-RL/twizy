@@ -42,7 +42,7 @@ All environment variables are defined in `.env` (copy from `env.exemple`). The r
 | `TWIZY_GPU` | Enable GPU for point cloud processing | `false` |
 | `TWIZY_LIDAR` | Launch LiDAR integration inside vehicle stack | `false` |
 | `TWIZY_INTERFACE` | Launch CAN vehicle interface | `true` |
-| `TWIZY_CAN_PORT` | Host CAN interface (`can0`, `vcan0`, …) | `can0` |
+| `TWIZY_CAN_PORT` | Host CAN interface — use the udev name (`can_twizy`); `vcan0` in simulation | `can_twizy` |
 | `NVIDIA_RUNTIME` | Docker runtime (`runc` or `nvidia`) | `runc` |
 | `TWIZY_HOST_FOLDER_PATH` | ROS2 source packages path on host | `./workspace/twizy/ros_packages` |
 | `TWIZY_SHARED_FOLDER` | Shared folder for bags and outputs | `./workspace/twizy/shared_folder` |

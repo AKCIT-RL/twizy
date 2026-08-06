@@ -7,7 +7,7 @@
 - Ubuntu 22.04 ou superior (recomendado)
 - Para câmera: câmera Lucid Vision Triton com Ethernet GigE
 - Para LiDAR: sensor Ouster OS-series em Ethernet
-- Para veículo: interface CAN (`can0`) ligada ao XCU StreetDrone Twizy
+- Para veículo: interface CAN (`can_twizy`, nome fixado por udev) ligada ao XCU StreetDrone Twizy
 
 ## 1 — Clonar o repositório
 
@@ -37,7 +37,7 @@ Edite `.env` com os valores da sua máquina. No mínimo:
 |----------|-----------|---------|
 | `CAMERA_SERIAL` | Número de série da câmera Lucid | `12345678` |
 | `ROS_DOMAIN_ID` | Domínio ROS2 compartilhado (deve ser igual em todas as máquinas) | `0` |
-| `TWIZY_CAN_PORT` | Nome da interface CAN no host | `can0` |
+| `TWIZY_CAN_PORT` | Nome da interface CAN no host (udev) | `can_twizy` |
 
 Veja [Configuração](configuration.md) para a referência completa de variáveis.
 
@@ -75,8 +75,8 @@ docker compose build carro
 === "Veículo (CAN)"
     Suba a interface CAN antes de iniciar o container:
     ```bash
-    sudo ip link set can0 type can bitrate 500000
-    sudo ip link set can0 up
+    sudo ip link set can_twizy type can bitrate 500000
+    sudo ip link set can_twizy up
     ```
 
 ## 5 — Iniciar os serviços

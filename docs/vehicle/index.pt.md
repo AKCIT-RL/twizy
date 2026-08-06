@@ -121,7 +121,9 @@ Integra o Xenos Control Unit (XCU) da StreetDrone com a stack de navegação ROS
 **Tópicos assinados:**
 | Tópico | Tipo | Descrição |
 |--------|------|-----------|
-| `/sd_control` | `ackermann_msgs/AckermannDriveStamped` | Comandos de condução |
+| `/direct_control_cmd` | `sd_msgs/DirectControl` | Setpoints de torque e esterço (caminho usado pela teleoperação) |
+| `/twist_cmd` | `geometry_msgs/TwistStamped` | Comando de velocidade (caminho alternativo) |
+| `/from_can_bus` | `can_msgs/Frame` | Frames recebidos do barramento |
 
 **Tópicos publicados:**
 | Tópico | Tipo | Descrição |

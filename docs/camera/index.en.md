@@ -6,6 +6,31 @@ ROS2 Humble driver for Lucid Vision Triton cameras (GigE Vision), packaged as a 
 
 Adapted from the [official Lucid Vision ROS2 driver](https://github.com/lucidvisionlabs/arena_camera_ros2) (originally for ROS2 Eloquent).
 
+## Vehicle mounting
+
+The three front cameras sit in a purpose-built 3D-printed mount fixed to the Twizy roof. The
+arrangement covers left, centre and right, and feeds the
+`/camera/top_{left,front,right}/image_raw` topics used by
+[teleoperation](../teleoperation/dashboard.md).
+
+![3D-printed mount with the three cameras installed on the Twizy roof](../assets/images/camera-mount-vehicle.jpg)
+
+!!! note "Running multiple cameras"
+    Two issues are known to break camera connectivity and are worth checking before blaming the
+    driver:
+
+    - **Jumbo frames and link speed.** The GigE interfaces need a high MTU; lower-speed interfaces
+      require specific error handling and are a recurring source of failure.
+    - **Startup order.** A firmware issue tied to the order in which cameras come up has been seen
+      before — if one unit does not appear, restart the whole set rather than the single camera.
+
+    Fast DDS has also clashed with the GigE cards in the past by binding to every interface on the
+    vehicle, preventing the cameras from connecting. It is restricted to a single interface for
+    that reason.
+
+    The mount uses the chassis' own fixing points, which gives a stable physical reference for the
+    URDF TFs in simulation.
+
 ## Requirements
 
 ![Camera serial number label (243901923)](../assets/images/camera-serial.png)
@@ -103,14 +128,14 @@ All parameters are **startup-only** — the node must be restarted to apply any 
 |-----------|------|-------------|---------|
 | `serial` | int | Camera serial number | first available |
 | `topic` | string | ROS2 topic name | `/arena_camera_node/images` |
-| `pixelformat` | string | `bayer_rggb8`, `rgb8`, `bgr8`, `mono8`, … | `rgb8` |
+| `pixelformat` | string | `bayer_rggb8`, `rgb8`, `bgr8`, `mono8`, … | empty — keeps the camera's current format |
 | `width` | int | Image width in pixels | camera maximum |
 | `height` | int | Image height in pixels | camera maximum |
-| `gain` | float | Sensor gain in dB | `0.0` |
+| `gain` | float | Sensor gain in dB | `-1.0` — "not applied" sentinel (`0.0` would actually be applied) |
 | `exposure_time` | float | Exposure in microseconds | camera default |
 | `frame_rate` | float | Target acquisition frame rate (FPS) | camera default |
 | `trigger_mode` | bool | `true` = triggered, `false` = continuous | `false` |
-| `qos_reliability` | string | `reliable` or `best_effort` | `reliable` |
+| `qos_reliability` | string | `reliable` or `best_effort` | empty — uses the rclcpp default |
 
 ### frame_rate and exposure_time interaction
 
@@ -169,7 +194,7 @@ FastDDS unicast profiles restrict which IP is advertised. The publisher profile 
 
 | Method | Resolution | Rate | Bandwidth | Notes |
 |--------|-----------|------|-----------|-------|
-| RAW throttled | 1024×768 | 15 FPS | ~12 Mbps | Low resolution only |
+| RAW throttled | 1024×768 | 15 FPS | ~94 Mbps | Low resolution only |
 | JPEG compressed q=80 | 2048×1536 | 33 FPS | ~35–45 Mbps | Full res at full rate (WiFi OK) |
 | RAW full | 2048×1536 | 33 FPS | ~825 Mbps | Requires 1 GbE link |
 

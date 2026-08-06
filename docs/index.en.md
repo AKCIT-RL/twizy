@@ -26,7 +26,7 @@ graph TB
 
     hw_cam["Lucid Triton GigE Camera"] --> cam_sdk
     hw_lidar["Ouster LiDAR (Ethernet)"] --> ouster_node
-    hw_can["CAN Bus (can0)"] --> can
+    hw_can["CAN Bus (can_twizy)"] --> can
 
     dc --> camera
     dc --> lidar
