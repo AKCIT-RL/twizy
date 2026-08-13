@@ -80,17 +80,46 @@
 
 ### Simulação
 
-Portar a stack de hardware para um simulador é um entregável do projeto. Duas linhas estão em
-avaliação:
+Portar a stack de hardware para um simulador é um entregável do projeto. O levantamento feito em
+duas máquinas (uma com NVIDIA de 4 GB, outra com AMD de 12 GB) chegou a uma conclusão que muda o
+planejamento.
 
-- [ ] **Autoware + AWSIM** — caminho aberto e documentado; o AWSIM exige GPU com 8 GB+ de VRAM
-      (o LiDAR é raytraced e não cabe em placas de 4 GB). Onde a VRAM for o limite, o
-      *Planning Simulator* do Autoware roda sem sensores raytraced e cobre planejamento e controle.
-- [ ] **NVIDIA Omniverse** — a investigar; depende de máquina dedicada com GPU de alto desempenho.
+**O LiDAR simulado do AWSIM exige NVIDIA — não é questão de VRAM.** A biblioteca
+`libRobotecGPULidar.so` linka diretamente contra `libcuda`, `libnvidia-ml` e `libnvoptix`. Em GPU
+AMD o carregamento falha e o LiDAR é desabilitado; em NVIDIA de 4 GB a VRAM estoura. O resto do
+AWSIM (ambiente 3D, física, tráfego, câmera, GNSS, IMU) funciona nos dois casos.
+
+Sem a nuvem de pontos o `e2e_simulator` não fecha o ciclo: a localização por NDT depende dela e a
+inicialização só por GNSS não sustenta o modo autônomo.
+
+**Consequência maior:** a percepção neural do Autoware (`lidar_centerpoint`, detectores de câmera)
+exige CUDA/TensorRT e não tem backend ROCm. Mesmo com LiDAR simulado, a percepção não roda sem
+NVIDIA — o único caminho sem CUDA é o `euclidean_cluster`, clustering geométrico clássico. Investir
+em simulação de sensores não desbloqueia percepção; o gargalo será a GPU.
+
+Situação de cada opção:
+
+| Opção | Situação |
+|---|---|
+| **Autoware Planning Simulator** | **Em uso** — ciclo autônomo completo, sem sensores raytraced |
+| `scenario_simulator_v2` (TIER IV) | **A avaliar** — ativo, nativo no Humble, simula LiDAR e detecções por raycast geométrico sem GPU, permite regressão por OpenSCENARIO |
+| AWSIM | Parcial — serve como ambiente 3D e para validar o contrato do vehicle_interface, sem LiDAR |
+| AWSIM-Labs | **Descartado** — arquivado em maio/2026 e usa a mesma biblioteca CUDA |
+| ZLUDA (CUDA→AMD) | Descartado — suporte a OptiX removido |
+| Isaac Sim / Omniverse | Descartado por ora — exige NVIDIA RTX com RT cores |
+| CARLA | Não priorizado — 16 GB de download, sem relato confirmado na GPU disponível |
+
+!!! note "O Planning Simulator não exercita o vehicle_interface"
+    O `simple_planning_simulator` **ocupa o lugar** do vehicle_interface: consome
+    `/control/command/control_cmd` e publica `/vehicle/status/*` diretamente. Ele mostra qual
+    contrato o nó precisa implementar, mas não testa o nó em si. Para isso, o caminho é `vcan0`
+    com o DBC do StreetDrone em loopback.
+
+- [ ] Avaliar o `scenario_simulator_v2` como caminho para regressão automatizada
 - [ ] Ancorar as TFs do URDF nos pontos de fixação de fábrica do chassi, os mesmos usados pelos
       suportes reais de câmera e LiDAR
 - [ ] Escrever o `vehicle_interface` do Twizy: traduzir `autoware_control_msgs/Control` para o
-      `DirectControl`/CAN já mapeado
+      `DirectControl`/CAN já mapeado — **não depende de simulador de sensores**
 
 ### Longo prazo
 
