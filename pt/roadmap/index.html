@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -33,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1962,17 +1962,71 @@
 <li>[ ] Substituir tomada do laboratório por tomada de 20A aterrada</li>
 </ul>
 <h3 id="simulacao">Simulação<a class="headerlink" href="#simulacao" title="Permanent link">&para;</a></h3>
-<p>Portar a stack de hardware para um simulador é um entregável do projeto. Duas linhas estão em
-avaliação:</p>
+<p>Portar a stack de hardware para um simulador é um entregável do projeto. O levantamento feito em
+duas máquinas (uma com NVIDIA de 4 GB, outra com AMD de 12 GB) chegou a uma conclusão que muda o
+planejamento.</p>
+<p><strong>O LiDAR simulado do AWSIM exige NVIDIA — não é questão de VRAM.</strong> A biblioteca
+<code>libRobotecGPULidar.so</code> linka diretamente contra <code>libcuda</code>, <code>libnvidia-ml</code> e <code>libnvoptix</code>. Em GPU
+AMD o carregamento falha e o LiDAR é desabilitado; em NVIDIA de 4 GB a VRAM estoura. O resto do
+AWSIM (ambiente 3D, física, tráfego, câmera, GNSS, IMU) funciona nos dois casos.</p>
+<p>Sem a nuvem de pontos o <code>e2e_simulator</code> não fecha o ciclo: a localização por NDT depende dela e a
+inicialização só por GNSS não sustenta o modo autônomo.</p>
+<p><strong>Consequência maior:</strong> a percepção neural do Autoware (<code>lidar_centerpoint</code>, detectores de câmera)
+exige CUDA/TensorRT e não tem backend ROCm. Mesmo com LiDAR simulado, a percepção não roda sem
+NVIDIA — o único caminho sem CUDA é o <code>euclidean_cluster</code>, clustering geométrico clássico. Investir
+em simulação de sensores não desbloqueia percepção; o gargalo será a GPU.</p>
+<p>Situação de cada opção:</p>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Situação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Autoware Planning Simulator</strong></td>
+<td><strong>Em uso</strong> — ciclo autônomo completo, sem sensores raytraced</td>
+</tr>
+<tr>
+<td><code>scenario_simulator_v2</code> (TIER IV)</td>
+<td><strong>A avaliar</strong> — ativo, nativo no Humble, simula LiDAR e detecções por raycast geométrico sem GPU, permite regressão por OpenSCENARIO</td>
+</tr>
+<tr>
+<td>AWSIM</td>
+<td>Parcial — serve como ambiente 3D e para validar o contrato do vehicle_interface, sem LiDAR</td>
+</tr>
+<tr>
+<td>AWSIM-Labs</td>
+<td><strong>Descartado</strong> — arquivado em maio/2026 e usa a mesma biblioteca CUDA</td>
+</tr>
+<tr>
+<td>ZLUDA (CUDA→AMD)</td>
+<td>Descartado — suporte a OptiX removido</td>
+</tr>
+<tr>
+<td>Isaac Sim / Omniverse</td>
+<td>Descartado por ora — exige NVIDIA RTX com RT cores</td>
+</tr>
+<tr>
+<td>CARLA</td>
+<td>Não priorizado — 16 GB de download, sem relato confirmado na GPU disponível</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">O Planning Simulator não exercita o vehicle_interface</p>
+<p>O <code>simple_planning_simulator</code> <strong>ocupa o lugar</strong> do vehicle_interface: consome
+<code>/control/command/control_cmd</code> e publica <code>/vehicle/status/*</code> diretamente. Ele mostra qual
+contrato o nó precisa implementar, mas não testa o nó em si. Para isso, o caminho é <code>vcan0</code>
+com o DBC do StreetDrone em loopback.</p>
+</div>
 <ul>
-<li>[ ] <strong>Autoware + AWSIM</strong> — caminho aberto e documentado; o AWSIM exige GPU com 8 GB+ de VRAM
-      (o LiDAR é raytraced e não cabe em placas de 4 GB). Onde a VRAM for o limite, o
-      <em>Planning Simulator</em> do Autoware roda sem sensores raytraced e cobre planejamento e controle.</li>
-<li>[ ] <strong>NVIDIA Omniverse</strong> — a investigar; depende de máquina dedicada com GPU de alto desempenho.</li>
+<li>[ ] Avaliar o <code>scenario_simulator_v2</code> como caminho para regressão automatizada</li>
 <li>[ ] Ancorar as TFs do URDF nos pontos de fixação de fábrica do chassi, os mesmos usados pelos
       suportes reais de câmera e LiDAR</li>
 <li>[ ] Escrever o <code>vehicle_interface</code> do Twizy: traduzir <code>autoware_control_msgs/Control</code> para o
-      <code>DirectControl</code>/CAN já mapeado</li>
+      <code>DirectControl</code>/CAN já mapeado — <strong>não depende de simulador de sensores</strong></li>
 </ul>
 <h3 id="longo-prazo">Longo prazo<a class="headerlink" href="#longo-prazo" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2056,7 +2110,7 @@ avaliação:</p>
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
