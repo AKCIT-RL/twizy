@@ -1,6 +1,7 @@
 # Automatic Startup on the Vehicle
 
-The onboard computer brings the stack up on its own at power-on. **There is no need to run
+The onboard computer brings the stack up on its own at power-on (to power up the vehicle, see
+[Powering Up the Vehicle](startup.md)). **There is no need to run
 `docker compose up` manually** — the manual commands shown on other pages are for debugging, not
 for normal operation.
 

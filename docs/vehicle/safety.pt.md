@@ -24,8 +24,13 @@ verdadeiro. Se o piloto desarmar a chave, a interface passa a enviar quadros CAN
 Em outras palavras: **desarmar a chave de modo é o caminho confiável para retomar o controle**, e
 não depende da rede, do computador de bordo nem do operador remoto.
 
+O manual do fabricante confirma que o piloto também retoma o controle **aplicando uma pequena força
+no volante, no freio ou no acelerador** — o XCU cancela o modo autônomo por conta própria. Outras
+formas de desarme estão em [Ligar o Veículo](startup.md).
+
 ## Antes de operar
 
+- [ ] Veículo ligado conforme [Ligar o Veículo](startup.md), com luz verde sólida no painel
 - [ ] Piloto de segurança no veículo, ciente de que o teste vai começar
 - [ ] Área livre, sem pessoas na trajetória
 - [ ] Marcha física em **Drive** — o software não comanda marcha (veja [Operação](operation.md))
@@ -42,16 +47,18 @@ não depende da rede, do computador de bordo nem do operador remoto.
 
 ## Perda de comunicação
 
-!!! warning "Comportamento não verificado"
-    O que o veículo faz se o enlace cair com ele em movimento **não foi testado nem confirmado**.
-    Não há watchdog documentado no caminho de teleoperação que zere o setpoint automaticamente ao
-    perder o operador remoto.
+O manual do fabricante confirma que **a perda de comunicação CAN desativa o modo autônomo
+automaticamente**, assim como qualquer falha detectada em sensores. O XCU implementa essa proteção
+no próprio hardware, independente do software.
 
-    Até que isso seja verificado e documentado, trate a perda de enlace como uma situação em que
-    **o piloto de segurança assume imediatamente**, desarmando a chave de modo.
+!!! warning "Isso cobre o CAN, não a VPN"
+    A proteção do XCU vale para o barramento CAN dentro do veículo. Se o que cair for o **enlace
+    remoto** (VPN ou ponte SSH), o computador de bordo continua ligado e o último comando publicado
+    pode permanecer válido — não há watchdog documentado nesse trecho do caminho.
 
-Verificar esse comportamento com o veículo suspenso ou em área controlada é um item pendente de
-segurança — veja [Status & Roadmap](../roadmap.md).
+    Trate a queda de enlace como situação em que **o piloto de segurança assume imediatamente**.
+    Medir esse comportamento com o veículo suspenso continua sendo um item pendente —
+    veja [Status & Roadmap](../roadmap.md).
 
 ## Encerrar a operação
 

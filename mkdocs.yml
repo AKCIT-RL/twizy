@@ -88,6 +88,7 @@ nav:
   - LiDAR (Ouster): lidar/index.md
   - Vehicle:
       - Safety: vehicle/safety.md
+      - Powering Up: vehicle/startup.md
       - Overview: vehicle/index.md
       - Automatic Startup: vehicle/autostart.md
       - Operation: vehicle/operation.md

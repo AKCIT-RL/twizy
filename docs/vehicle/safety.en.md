@@ -24,8 +24,13 @@ true. If the driver disarms the switch, the interface starts sending **zeroed** 
 In other words: **disarming the mode switch is the reliable way to take back control**, and it does
 not depend on the network, the onboard computer or the remote operator.
 
+The manufacturer's manual confirms the driver can also take over by **applying a small force to the
+steering, brake or throttle** — the XCU cancels autonomous mode on its own. Other ways to disarm are
+listed in [Powering Up the Vehicle](startup.md).
+
 ## Before operating
 
+- [ ] Vehicle powered up per [Powering Up the Vehicle](startup.md), solid green light on the dash
 - [ ] Safety driver in the vehicle, aware the test is about to start
 - [ ] Clear area, nobody in the path
 - [ ] Physical gear in **Drive** — software does not command the gear (see [Operation](operation.md))
@@ -42,16 +47,18 @@ not depend on the network, the onboard computer or the remote operator.
 
 ## Loss of communication
 
-!!! warning "Unverified behaviour"
-    What the vehicle does if the link drops while it is moving has **not been tested or confirmed**.
-    There is no documented watchdog in the teleoperation path that zeroes the setpoint automatically
-    when the remote operator is lost.
+The manufacturer's manual confirms that **loss of CAN communication disarms autonomous mode
+automatically**, as does any detected sensor fault. The XCU implements that protection in hardware,
+independently of the software.
 
-    Until this is verified and documented, treat a link loss as a situation where **the safety
-    driver takes over immediately**, disarming the mode switch.
+!!! warning "This covers CAN, not the VPN"
+    The XCU protection applies to the CAN bus inside the vehicle. If what drops is the **remote
+    link** (VPN or SSH bridge), the onboard computer stays up and the last published command may
+    remain valid — there is no documented watchdog on that leg of the path.
 
-Verifying this behaviour with the vehicle jacked up or in a controlled area is a pending safety
-item — see [Status & Roadmap](../roadmap.md).
+    Treat a link loss as a situation where **the safety driver takes over immediately**. Measuring
+    this behaviour with the vehicle jacked up is still pending — see
+    [Status & Roadmap](../roadmap.md).
 
 ## Ending the session
 

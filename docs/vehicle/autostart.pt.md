@@ -1,6 +1,7 @@
 # Inicialização Automática no Veículo
 
-O computador de bordo sobe a stack sozinho ao ligar. **Não é preciso rodar `docker compose up`
+O computador de bordo sobe a stack sozinho ao ligar (para ligar o veículo, veja
+[Ligar o Veículo](startup.md)). **Não é preciso rodar `docker compose up`
 manualmente** — os comandos manuais que aparecem nas outras páginas servem para depuração, não
 para a operação normal.
 
