@@ -1167,6 +1167,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../startup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Powering Up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../" class="md-nav__link">
         
   
@@ -1652,7 +1680,8 @@
 
 
 <h1 id="automatic-startup-on-the-vehicle">Automatic Startup on the Vehicle<a class="headerlink" href="#automatic-startup-on-the-vehicle" title="Permanent link">&para;</a></h1>
-<p>The onboard computer brings the stack up on its own at power-on. <strong>There is no need to run
+<p>The onboard computer brings the stack up on its own at power-on (to power up the vehicle, see
+<a href="../startup/">Powering Up the Vehicle</a>). <strong>There is no need to run
 <code>docker compose up</code> manually</strong> — the manual commands shown on other pages are for debugging, not
 for normal operation.</p>
 <p>When the vehicle powers up, four systemd services run in a defined order, and udev rules pin the
@@ -1741,7 +1770,7 @@ working directory, not a canonical clone. That is where the divergence below com
 <code>car</code>, with <code>container_name: air_car_container</code>. The vehicle machine, however, runs that container
 as <strong><code>twizy</code></strong> — a sign it is on a different revision of the compose.</p>
 <p>Before following any procedure, confirm the actual names:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>ps<span class="w"> </span>--format<span class="w"> </span><span class="s1">&#39;{{.Names}}\t{{.Status}}&#39;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>ps<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{.Names}}\t{{.Status}}'</span>
 </code></pre></div>
 <p>The names observed on the machine are <code>twizy</code>, <code>ouster_lidar</code>, <code>air_twizy_camera</code> and
 <code>discovery_server</code>. Reconciling the machine with <code>main</code> (or the other way round) is still pending.</p>

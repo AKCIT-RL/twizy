@@ -1491,6 +1491,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../vehicle/startup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Powering Up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../vehicle/" class="md-nav__link">
         
   
@@ -2287,7 +2315,7 @@ URDF TFs in simulation.</p>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>./scripts/start_camera.sh<span class="w"> </span>&lt;serial&gt;<span class="w"> </span>&lt;topic&gt;<span class="w"> </span>&lt;pixelformat&gt;<span class="w"> </span>&lt;width&gt;<span class="w"> </span>&lt;height&gt;<span class="w"> </span>&lt;gain&gt;<span class="w"> </span>&lt;exposure&gt;<span class="w"> </span>&lt;fps&gt;
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Example</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>./scripts/start_camera.sh<span class="w"> </span><span class="m">12345678</span><span class="w"> </span>/camera/image_raw<span class="w"> </span>bayer_rggb8<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">25000</span><span class="w"> </span><span class="m">33</span>.0
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>./scripts/start_camera.sh<span class="w"> </span><span class="m">12345678</span><span class="w"> </span>/camera/image_raw<span class="w"> </span>bayer_rggb8<span class="w"> </span><span class="s2">""</span><span class="w"> </span><span class="s2">""</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">25000</span><span class="w"> </span><span class="m">33</span>.0
 </code></pre></div>
 <p>Empty <code>""</code> arguments use the camera's maximum resolution.</p>
 <h3 id="multiple-cameras">Multiple cameras<a class="headerlink" href="#multiple-cameras" title="Permanent link">&para;</a></h3>
@@ -2346,7 +2374,7 @@ URDF TFs in simulation.</p>
 <h3 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h3>
 <h4 id="camera-machine-publisher">Camera machine (publisher)<a class="headerlink" href="#camera-machine-publisher" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>./workspace/camera-lucid/config/setup_fastdds.sh<span class="w"> </span>publisher<span class="w"> </span>&lt;streaming-interface&gt;
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>./workspace/camera-lucid/scripts/start_camera.sh<span class="w"> </span>&lt;serial&gt;<span class="w"> </span>/camera/image_raw<span class="w"> </span>bayer_rggb8<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">25000</span><span class="w"> </span><span class="m">33</span>.0
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>./workspace/camera-lucid/scripts/start_camera.sh<span class="w"> </span>&lt;serial&gt;<span class="w"> </span>/camera/image_raw<span class="w"> </span>bayer_rggb8<span class="w"> </span><span class="s2">""</span><span class="w"> </span><span class="s2">""</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">25000</span><span class="w"> </span><span class="m">33</span>.0
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>bash<span class="w"> </span>./workspace/camera-lucid/notebook_setup/compress_stream.sh<span class="w"> </span>/camera/image_raw
 </code></pre></div>
 <h4 id="receiver-machine-docker">Receiver machine (Docker)<a class="headerlink" href="#receiver-machine-docker" title="Permanent link">&para;</a></h4>

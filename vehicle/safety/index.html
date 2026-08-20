@@ -16,7 +16,7 @@
         <link rel="prev" href="../../lidar/">
       
       
-        <link rel="next" href="../">
+        <link rel="next" href="../startup/">
       
       
         
@@ -1280,6 +1280,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../startup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Powering Up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../" class="md-nav__link">
         
   
@@ -1707,8 +1735,12 @@ true. If the driver disarms the switch, the interface starts sending <strong>zer
 (<code>ResetControlCanData</code>) and torque and steering commands stop having any effect.</p>
 <p>In other words: <strong>disarming the mode switch is the reliable way to take back control</strong>, and it does
 not depend on the network, the onboard computer or the remote operator.</p>
+<p>The manufacturer's manual confirms the driver can also take over by <strong>applying a small force to the
+steering, brake or throttle</strong> — the XCU cancels autonomous mode on its own. Other ways to disarm are
+listed in <a href="../startup/">Powering Up the Vehicle</a>.</p>
 <h2 id="before-operating">Before operating<a class="headerlink" href="#before-operating" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[ ] Vehicle powered up per <a href="../startup/">Powering Up the Vehicle</a>, solid green light on the dash</li>
 <li>[ ] Safety driver in the vehicle, aware the test is about to start</li>
 <li>[ ] Clear area, nobody in the path</li>
 <li>[ ] Physical gear in <strong>Drive</strong> — software does not command the gear (see <a href="../operation/">Operation</a>)</li>
@@ -1724,16 +1756,18 @@ not depend on the network, the onboard computer or the remote operator.</p>
 <li>At the first sign of unexpected behaviour the driver disarms the mode switch. Discuss afterwards.</li>
 </ul>
 <h2 id="loss-of-communication">Loss of communication<a class="headerlink" href="#loss-of-communication" title="Permanent link">&para;</a></h2>
+<p>The manufacturer's manual confirms that <strong>loss of CAN communication disarms autonomous mode
+automatically</strong>, as does any detected sensor fault. The XCU implements that protection in hardware,
+independently of the software.</p>
 <div class="admonition warning">
-<p class="admonition-title">Unverified behaviour</p>
-<p>What the vehicle does if the link drops while it is moving has <strong>not been tested or confirmed</strong>.
-There is no documented watchdog in the teleoperation path that zeroes the setpoint automatically
-when the remote operator is lost.</p>
-<p>Until this is verified and documented, treat a link loss as a situation where <strong>the safety
-driver takes over immediately</strong>, disarming the mode switch.</p>
+<p class="admonition-title">This covers CAN, not the VPN</p>
+<p>The XCU protection applies to the CAN bus inside the vehicle. If what drops is the <strong>remote
+link</strong> (VPN or SSH bridge), the onboard computer stays up and the last published command may
+remain valid — there is no documented watchdog on that leg of the path.</p>
+<p>Treat a link loss as a situation where <strong>the safety driver takes over immediately</strong>. Measuring
+this behaviour with the vehicle jacked up is still pending — see
+<a href="../../roadmap/">Status &amp; Roadmap</a>.</p>
 </div>
-<p>Verifying this behaviour with the vehicle jacked up or in a controlled area is a pending safety
-item — see <a href="../../roadmap/">Status &amp; Roadmap</a>.</p>
 <h2 id="ending-the-session">Ending the session<a class="headerlink" href="#ending-the-session" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Zero the commands: release all keys and confirm zero torque

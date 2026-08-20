@@ -16,7 +16,7 @@
         <link rel="prev" href="../../lidar/">
       
       
-        <link rel="next" href="../">
+        <link rel="next" href="../startup/">
       
       
         
@@ -1280,6 +1280,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../startup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Powering Up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../" class="md-nav__link">
         
   
@@ -1707,8 +1735,12 @@ verdadeiro. Se o piloto desarmar a chave, a interface passa a enviar quadros CAN
 (<code>ResetControlCanData</code>) e os comandos de torque e esterço deixam de ter efeito.</p>
 <p>Em outras palavras: <strong>desarmar a chave de modo é o caminho confiável para retomar o controle</strong>, e
 não depende da rede, do computador de bordo nem do operador remoto.</p>
+<p>O manual do fabricante confirma que o piloto também retoma o controle <strong>aplicando uma pequena força
+no volante, no freio ou no acelerador</strong> — o XCU cancela o modo autônomo por conta própria. Outras
+formas de desarme estão em <a href="../startup/">Ligar o Veículo</a>.</p>
 <h2 id="antes-de-operar">Antes de operar<a class="headerlink" href="#antes-de-operar" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[ ] Veículo ligado conforme <a href="../startup/">Ligar o Veículo</a>, com luz verde sólida no painel</li>
 <li>[ ] Piloto de segurança no veículo, ciente de que o teste vai começar</li>
 <li>[ ] Área livre, sem pessoas na trajetória</li>
 <li>[ ] Marcha física em <strong>Drive</strong> — o software não comanda marcha (veja <a href="../operation/">Operação</a>)</li>
@@ -1724,16 +1756,18 @@ não depende da rede, do computador de bordo nem do operador remoto.</p>
 <li>Ao menor sinal de comportamento inesperado, o piloto desarma a chave de modo. Discussão depois.</li>
 </ul>
 <h2 id="perda-de-comunicacao">Perda de comunicação<a class="headerlink" href="#perda-de-comunicacao" title="Permanent link">&para;</a></h2>
+<p>O manual do fabricante confirma que <strong>a perda de comunicação CAN desativa o modo autônomo
+automaticamente</strong>, assim como qualquer falha detectada em sensores. O XCU implementa essa proteção
+no próprio hardware, independente do software.</p>
 <div class="admonition warning">
-<p class="admonition-title">Comportamento não verificado</p>
-<p>O que o veículo faz se o enlace cair com ele em movimento <strong>não foi testado nem confirmado</strong>.
-Não há watchdog documentado no caminho de teleoperação que zere o setpoint automaticamente ao
-perder o operador remoto.</p>
-<p>Até que isso seja verificado e documentado, trate a perda de enlace como uma situação em que
-<strong>o piloto de segurança assume imediatamente</strong>, desarmando a chave de modo.</p>
+<p class="admonition-title">Isso cobre o CAN, não a VPN</p>
+<p>A proteção do XCU vale para o barramento CAN dentro do veículo. Se o que cair for o <strong>enlace
+remoto</strong> (VPN ou ponte SSH), o computador de bordo continua ligado e o último comando publicado
+pode permanecer válido — não há watchdog documentado nesse trecho do caminho.</p>
+<p>Trate a queda de enlace como situação em que <strong>o piloto de segurança assume imediatamente</strong>.
+Medir esse comportamento com o veículo suspenso continua sendo um item pendente —
+veja <a href="../../roadmap/">Status &amp; Roadmap</a>.</p>
 </div>
-<p>Verificar esse comportamento com o veículo suspenso ou em área controlada é um item pendente de
-segurança — veja <a href="../../roadmap/">Status &amp; Roadmap</a>.</p>
 <h2 id="encerrar-a-operacao">Encerrar a operação<a class="headerlink" href="#encerrar-a-operacao" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Zere os comandos: solte todas as teclas e confirme torque em zero

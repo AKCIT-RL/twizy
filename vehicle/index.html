@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://akcit-rl.github.io/twizy/vehicle/">
       
       
-        <link rel="prev" href="safety/">
+        <link rel="prev" href="startup/">
       
       
         <link rel="next" href="autostart/">
@@ -1164,6 +1164,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="startup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Powering Up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -2185,7 +2213,7 @@
 <div class="admonition note">
 <p class="admonition-title">First connection</p>
 <p>On the first SSH from a new machine, you will see a key fingerprint prompt:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>The authenticity of host &#39;twizy (100.122.121.134)&#39; can&#39;t be established.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>The authenticity of host 'twizy (100.122.121.134)' can't be established.
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>ED25519 key fingerprint is SHA256:6KA7LU04JZoQ+1IiHqn3uDhkX+sSFLTbj2AMHe+xGgY.
 <a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Are you sure you want to continue connecting (yes/no/[fingerprint])?
 </code></pre></div>
@@ -2235,7 +2263,7 @@ Type <code>yes</code> (not just <code>y</code> — SSH rejects the abbreviated a
 <div class="admonition note">
 <p class="admonition-title">Non-blocking warnings from run.sh</p>
 <p>These appear every time and can be ignored:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>xhost: unable to open display &quot;&quot;             ← no screen over SSH, harmless
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>xhost: unable to open display ""             ← no screen over SSH, harmless
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>touch: /tmp/.docker.xauth: Permission denied ← same reason, harmless
 <a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>cp: cyclonedds_vehicle.xml.template: No such file or directory ← template missing, does not affect operation
 </code></pre></div></p>
@@ -2335,13 +2363,13 @@ Without it, <code>ros2</code> commands will not be found and Python scripts that
 </code></pre></div>
 <p>Expected output:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>Reading from the keyboard and Publishing to TwistStamped!
-<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>Uses &quot;w, a, s, d, x&quot; keys
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>Uses "w, a, s, d, x" keys
 <a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>---------------------------
-<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>Move forward:   &#39;w&#39;
-<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>Move backward:  &#39;s&#39;
-<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>Turn left:      &#39;a&#39;
-<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>Turn right:     &#39;d&#39;
-<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>Stop:           &#39;x&#39;
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>Move forward:   'w'
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>Move backward:  's'
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>Turn left:      'a'
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>Turn right:     'd'
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>Stop:           'x'
 <a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>
 <a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>CTRL-C to quit
 <a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>
@@ -2354,10 +2382,10 @@ Without it, <code>ros2</code> commands will not be found and Python scripts that
 - Maximum range: <strong>-55 to +55</strong> (the script clamps at this limit)
 - Releasing the key does not center the steering — you must press the opposite direction or <code>x</code></p>
 <p><strong>Example observed values during a test session:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Steering Value: -5.0    ← one &#39;d&#39; press
-<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>Steering Value: 5.0     ← switched to &#39;a&#39;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Steering Value: -5.0    ← one 'd' press
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>Steering Value: 5.0     ← switched to 'a'
 <a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>Steering Value: 10.0
-<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>Steering Value: -55.0   ← held &#39;a&#39; repeatedly until clamp
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>Steering Value: -55.0   ← held 'a' repeatedly until clamp
 <a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>Steering Value: 0.0     ← returned to center
 </code></pre></div></p>
 <div class="admonition warning">
@@ -2367,7 +2395,7 @@ Without it, <code>ros2</code> commands will not be found and Python scripts that
 <hr />
 <h3 id="7-stopping-the-containers">7 — Stopping the containers<a class="headerlink" href="#7-stopping-the-containers" title="Permanent link">&para;</a></h3>
 <p><strong>Do NOT use <code>docker compose down</code></strong> — it requires the same environment variables that <code>run.sh</code> sets, and will fail with variable-not-set warnings if called from a plain shell:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>WARN: The &quot;CAN_PORT&quot; variable is not set. Defaulting to a blank string.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>WARN: The "CAN_PORT" variable is not set. Defaulting to a blank string.
 <a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>invalid spec: ::rw: empty section between colons
 </code></pre></div>
 <p>Use <code>docker stop</code> by container name instead:</p>

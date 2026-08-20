@@ -1167,6 +1167,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../startup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Powering Up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../" class="md-nav__link">
         
   
@@ -1652,7 +1680,8 @@
 
 
 <h1 id="inicializacao-automatica-no-veiculo">Inicialização Automática no Veículo<a class="headerlink" href="#inicializacao-automatica-no-veiculo" title="Permanent link">&para;</a></h1>
-<p>O computador de bordo sobe a stack sozinho ao ligar. <strong>Não é preciso rodar <code>docker compose up</code>
+<p>O computador de bordo sobe a stack sozinho ao ligar (para ligar o veículo, veja
+<a href="../startup/">Ligar o Veículo</a>). <strong>Não é preciso rodar <code>docker compose up</code>
 manualmente</strong> — os comandos manuais que aparecem nas outras páginas servem para depuração, não
 para a operação normal.</p>
 <p>Ao ligar o veículo, quatro serviços systemd entram em ação numa ordem definida, e regras udev
@@ -1742,7 +1771,7 @@ pessoal, não um clone canônico. É daí que vem a divergência a seguir.</p>
 <code>car</code>, com <code>container_name: air_car_container</code>. A máquina do veículo, porém, roda esse container
 com o nome <strong><code>twizy</code></strong> — sinal de que ela está numa revisão diferente do compose.</p>
 <p>Ao seguir qualquer procedimento, confirme os nomes reais antes:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>ps<span class="w"> </span>--format<span class="w"> </span><span class="s1">&#39;{{.Names}}\t{{.Status}}&#39;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>ps<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{.Names}}\t{{.Status}}'</span>
 </code></pre></div>
 <p>Os nomes observados na máquina são <code>twizy</code>, <code>ouster_lidar</code>, <code>air_twizy_camera</code> e
 <code>discovery_server</code>. Alinhar a máquina ao <code>main</code> (ou o contrário) continua pendente.</p>
